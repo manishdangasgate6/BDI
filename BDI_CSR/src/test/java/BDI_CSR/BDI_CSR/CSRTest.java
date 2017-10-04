@@ -24,37 +24,8 @@ public class CSRTest {
 		driver.manage().window().maximize();
 	}
 
-	// @Test(priority = 1)
-	// public void AdminInvalidUserNamePassword() throws InterruptedException {
-	//
-	// driver.get("http://bdibeta.test.gate6.com/#/login");
-	// driver.findElement(By.name("username")).sendKeys("test@gate6.com");
-	// driver.findElement(By.name("passwd")).sendKeys("Test12345");
-	// driver.findElement(By.xpath("//div[@class='card']//button[.='Login']")).click();
-	// Thread.sleep(5000);
-	// String URL = driver.getCurrentUrl();
-	// Assert.assertEquals(URL, "http://bdibeta.test.gate6.com/#/login");
-	//
-	// }
-	//
-	// @Test(priority = 2)
-	// public void CSRlogin_Logout() throws InterruptedException {
-	//
-	// driver.get("http://bdibeta.test.gate6.com/#/login");
-	// driver.findElement(By.name("username")).sendKeys("csr@lorem.com");
-	// driver.findElement(By.name("passwd")).sendKeys("Csr11111");
-	// driver.findElement(By.xpath("//div[@class='card']//button[.='Login']")).click();
-	// Thread.sleep(5000);
-	// String URL = driver.getCurrentUrl();
-	// Assert.assertEquals(URL, "http://bdibeta.test.gate6.com/#/clients");
-	// driver.findElement(By.xpath("//div[@class='text-right']//a[.='Logout']")).click();
-	// Thread.sleep(5000);
-	// String url1 = driver.getCurrentUrl();
-	// Assert.assertEquals(url1, "http://bdibeta.test.gate6.com/#/login");
-	//
-	// }
-	@Test(priority = 2)
-	public void CSRAddNewClient() throws InterruptedException {
+	@Test(priority = 1)
+	public void CSRAddNewClientWithUsingValidInfo() throws InterruptedException {
 
 		driver.get("http://bdibeta.test.gate6.com/#/login");
 		driver.findElement(By.name("username")).sendKeys("csr@lorem.com");
@@ -68,7 +39,7 @@ public class CSRTest {
 		driver.findElement(By.name("mname")).sendKeys("Kumar");
 		driver.findElement(By.name("lname")).sendKeys("bijoriya");
 		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
-		driver.findElement(By.name("driverlicense")).sendKeys("3456tfst12345w78");
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
 		driver.findElement(By.name("address")).sendKeys("501-502");
 		driver.findElement(By.name("address2")).sendKeys("New road");
 		Thread.sleep(5000);
@@ -96,7 +67,7 @@ public class CSRTest {
 
 		driver.findElement(By.name("zip")).sendKeys("25415");
 		driver.findElement(By.name("contact")).sendKeys("9523654152");
-		driver.findElement(By.name("email")).sendKeys("testAuto@gate6.com");
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
 		// -------------------Offenders Information------------------------
 
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -104,26 +75,15 @@ public class CSRTest {
 
 		Thread.sleep(2000);
 		driver.findElement(By.name("installdaterequest")).sendKeys("09/28/2017");
-		driver.findElement(By.xpath("//label[@for='preferredinstallmethod2']")).click();
+		driver.findElement(By.name("leaseTerm")).click();
 		// driver.findElement(By.xpath("//label[@for='preferredinstallmethod1']")).click();
 
-		driver.findElement(By.name("locId"));
 		if (!driver
 				.findElement(By.xpath(
-						"//div[@class='container']/div[1]/div[1]/div[2]/div/div[2]/div[2]/div/select//option[3]"))
+						"//div[@class='container']/div[1]/div[1]/div[2]/div/div[2]/div[1]/div/select//option[4]"))
 				.isSelected()) {
 			driver.findElement(
-					By.xpath("//div[@class='container']/div[1]/div[1]/div[2]/div/div[2]/div[2]/div/select//option[3]"))
-					.click();
-		}
-
-		driver.findElement(By.name("leaseTerm")).click();
-		if (!driver
-				.findElement(By.xpath(
-						"//div[@class='container']/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/select//option[5]"))
-				.isSelected()) {
-			driver.findElement(
-					By.xpath("//div[@class='container']/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/select//option[5]"))
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[2]/div/div[2]/div[1]/div/select//option[4]"))
 					.click();
 		}
 
@@ -198,22 +158,1087 @@ public class CSRTest {
 		WebElement EditableEmail = driver.findElement(By.name("courtemail"));
 		EditableEmail.clear();
 		EditableEmail.sendKeys("test@test12.com");
+		// -------------------court Information------------------
+
 		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
 		jseDown1.executeScript("window.scrollBy(0,500)", "");
 		Thread.sleep(2000);
-		//driver.findElement(By.name("submit")).click();
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[contains(@class,'text-success')]"));
+		String hello1 = text1.getText();
 
-		
+		System.out.println(hello1);
+
+		Assert.assertEquals("Client with provided details is saved Successfully. New Case is also created.", hello1);
+
 	}
-	
-	@AfterClass
-	 public static boolean isAlertPresent(ChromeDriver wd) {
-	        try {
-	            wd.switchTo().alert();
-	            return true;
-	        } catch (NoAlertPresentException e) {
-	            return false;
-	        }
-	    }
+
+	// ---------------------------------------------------------------------------
+	// ---------------------Blank New client info-------------------------------
+	// ------------------------------------------------------------------------
+
+	@Test(priority = 2)
+	public void NewClientBlankName() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		// driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		// driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		// driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
+
+	@Test(priority = 3)
+	public void NewClientBlankLicence() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		// driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(5000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(2000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 4)
+	public void NewClientBlankAddress() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		// driver.findElement(By.name("address")).sendKeys("501-502");
+
+		// driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 5)
+	public void NewClientBlanState() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		// Thread.sleep(5000);
+		// driver.findElement(By.name("state")).click();
+		//
+		// if (!driver
+		// .findElement(By.xpath(
+		// "//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+		// .isSelected()) {
+		// driver.findElement(
+		// By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+		// .click();
+		// }
+		// Thread.sleep(5000);
+		// driver.findElement(By.name("city")).click();
+		//
+		// if (!driver
+		// .findElement(By.xpath(
+		// "//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+		// .isSelected()) {
+		// driver.findElement(
+		// By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+		// .click();
+		// }
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 6)
+	public void NewClientBlankCity() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		// Thread.sleep(5000);
+		// driver.findElement(By.name("city")).click();
+		//
+		// if (!driver
+		// .findElement(By.xpath(
+		// "//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+		// .isSelected()) {
+		// driver.findElement(
+		// By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+		// .click();
+		// }
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 7)
+	public void NewClientBlankZIP() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		// driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 8)
+	public void NewClientBlankPhone() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		// driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 9)
+	public void NewClientBlankEmail() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		// driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 10)
+	public void NewClientBlankDOB() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		// driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
+
+	// --------------------------------------------------------------
+	/////////////// Invalid New Client/////////////////
+	// ----------------------------------------------------------
+
+	@Test(priority = 11)
+	public void Client_InvalidName() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("JG^&*&*^&*^");
+
+		driver.findElement(By.name("mname")).sendKeys("JG^&*&*^&*^");
+
+		driver.findElement(By.name("lname")).sendKeys("JG^&*&*^&*^");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
+
+	@Test(priority = 12)
+	public void NewClientInvalidLicence() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("invalid&*^%^&%");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(5000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(2000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 13)
+	public void NewClientInvalidZIP() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("3454&");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 14)
+	public void NewClientInvalidPhone() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("3454&");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 15)
+	public void NewClientInvalidEmail() throws InterruptedException {
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("(*&*(&*(&*(");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+	}
+
+	@Test(priority = 16)
+	public void NewInvalidDOB() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("876*&^");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
+
+	// --------------------------------------------------------------
+	// ---------------------------Invalid Court Info-------------------
+	// ---------------------------------------------------------------
+	@Test(priority = 17)
+	public void CourtInvalidEmail() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+
+		driver.findElement(By.name("courtpo")).sendKeys("NewOne");
+		driver.findElement(By.name("juridictionid")).click();
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[2]/div[2]/div/div[1]/div[2]/div/select//option[2]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[2]/div[2]/div/div[1]/div[2]/div/select//option[2]"))
+					.click();
+
+		}
+		WebElement Editable1 = driver.findElement(By.name("courtname"));
+		Editable1.clear();
+		Editable1.sendKeys("test1");
+
+		driver.findElement(By.name("courtnotes")).sendKeys("hello");
+
+		WebElement EditablePhone = driver.findElement(By.name("courtphone"));
+		EditablePhone.clear();
+		EditablePhone.sendKeys("ghhjg@jgjh.com");
+
+		WebElement EditableEmail = driver.findElement(By.name("courtemail"));
+		EditableEmail.clear();
+		EditableEmail.sendKeys("^&**(OH");
+
+		JavascriptExecutor jseDown2 = (JavascriptExecutor) driver;
+		jseDown2.executeScript("window.scrollBy(0,1000)", "");
+
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
+
+	@Test(priority = 18)
+	public void CourtInvalidContactNumber() throws InterruptedException {
+
+		driver.get("http://bdibeta.test.gate6.com/#/addclients");
+
+		driver.findElement(By.name("fname")).sendKeys("Rakesh");
+
+		driver.findElement(By.name("mname")).sendKeys("Kumar");
+
+		driver.findElement(By.name("lname")).sendKeys("bijoriya");
+
+		driver.findElement(By.name("dob")).sendKeys("09/05/2017");
+
+		driver.findElement(By.name("driverlicense")).sendKeys("345ddfdfd46445w78");
+
+		driver.findElement(By.name("address")).sendKeys("501-502");
+
+		driver.findElement(By.name("address2")).sendKeys("New road");
+		Thread.sleep(2000);
+		driver.findElement(By.name("state")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[1]/div/select//option[6]"))
+					.click();
+		}
+		Thread.sleep(5000);
+		driver.findElement(By.name("city")).click();
+
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[1]/div[1]/div/div[5]/div[2]/div/select//option[15]"))
+					.click();
+		}
+
+		driver.findElement(By.name("zip")).sendKeys("25415");
+
+		driver.findElement(By.name("contact")).sendKeys("9523654152");
+
+		driver.findElement(By.name("email")).sendKeys("tefAuto@gate6.com");
+		JavascriptExecutor jseDown1 = (JavascriptExecutor) driver;
+		jseDown1.executeScript("window.scrollBy(0,1000)", "");
+		Thread.sleep(2000);
+
+		driver.findElement(By.name("courtpo")).sendKeys("NewOne");
+		driver.findElement(By.name("juridictionid")).click();
+		if (!driver
+				.findElement(By.xpath(
+						"//div[@class='container']/div[1]/div[2]/div[2]/div/div[1]/div[2]/div/select//option[2]"))
+				.isSelected()) {
+			driver.findElement(
+					By.xpath("//div[@class='container']/div[1]/div[2]/div[2]/div/div[1]/div[2]/div/select//option[2]"))
+					.click();
+
+		}
+		WebElement Editable1 = driver.findElement(By.name("courtname"));
+		Editable1.clear();
+		Editable1.sendKeys("test1");
+
+		driver.findElement(By.name("courtnotes")).sendKeys("hello");
+
+		WebElement EditablePhone = driver.findElement(By.name("courtphone"));
+		EditablePhone.clear();
+		EditablePhone.sendKeys("*^&*^&*^*&^*");
+
+		WebElement EditableEmail = driver.findElement(By.name("courtemail"));
+		EditableEmail.clear();
+		EditableEmail.sendKeys("test@test12.com");
+
+		JavascriptExecutor jseDown2 = (JavascriptExecutor) driver;
+		jseDown2.executeScript("window.scrollBy(0,1000)", "");
+
+		driver.findElement(By.name("submit")).click();
+		Thread.sleep(3000);
+		WebElement text1 = driver.findElement(By.xpath("//div[@class='container']/div[3]/div[3]"));
+		String hello1 = text1.getText();
+
+		System.out.println(hello1);
+
+		Assert.assertEquals("Please fill required fields", hello1);
+
+	}
 
 }
